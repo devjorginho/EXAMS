@@ -1,40 +1,55 @@
+//    ____                   __                 _       __        
+//   / __ \___ _   __       / /___  _________ _(_)___  / /_  ____ 
+//  / / / / _ \ | / /  __  / / __ \/ ___/ __ `/ / __ \/ __ \/ __ \
+// / /_/ /  __/ |/ /  / /_/ / /_/ / /  / /_/ / / / / / / / / /_/ /
+///_____/\___/|___/   \____/\____/_/   \__, /_/_/ /_/_/ /_/\____/ 
+//                                    /____/                     
+//	devjorginho 😎 | GitHub: https://github.com/devjorginho
+
+
 // I made this program to train for the exam rank2
 // a = 97
 // z = 122
 // A = 65
 // Z = 90
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <unistd.h>
 
-char	*blackmirror(char *s)
+size_t	lenjorginho(char *s)
 {
 	size_t	i;
 
 	i = 0;
 	while(s[i])
-	{
-		if(s[i] >= 'a' && s[i] <= 'z')
-			s[i] = 'z' - (s[i] - 'a');
-		if(s[i] >= 'A' && s[i] <= 'Z')
-			s[i] = 'Z' - (s[i] - 'A');
 		i++;
-	}
-	return(s);
+	return(i);
 }
+int	Uletter(char c)
+{
+	return(c >= 'A' && c <= 'Z');
+}
+int	Lletter(char c)
+{
+	return(c >= 'a' && c <= 'z');
+}
+char *blackmirror(char *str)
+{
+	const char *start;
 
+	start = str;
+	while(*str)
+	{
+		if(Lletter(*str))
+			*str = 'z' - (*str - 'a');
+		if(Uletter(*str))
+			*str = 'Z' - (*str - 'A');
+		str++;
+	}
+	return (start);
+}
 int main(int argc, char *argv[])
 {
-	char *str = blackmirror(argv[1]);
 	if (argc == 2)
-	{
-		while(*str)
-		{
-			write(1, str, 1);
-			str++;
-		}
-	}
+		write(1, blackmirror(argv[1]), lenjorginho(argv[1]));
 	write(1, "\n", 1);
 }

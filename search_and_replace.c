@@ -35,7 +35,8 @@ int	main(int argc, char *argv[])
 	size_t i;
 
 	i = 0;
-	if(argc == 4)
+	if(argc == 4) //&& avlen(argv[2]) == 1 && avlen(argv[3]) == 1 i put this protection if have more than 1 char in av2 and av3
 		write(1, replaced(argv[1], argv[2][i], argv[3][i]), avlen(argv[1]));
 	write(1, "\n", 1);
+	return(0);
 }

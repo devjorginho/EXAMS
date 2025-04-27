@@ -8,13 +8,27 @@
 
 #include <unistd.h>
 
-void	ft_putstr(char *str)
+int	ft_strlen(char *str)
 {
-	while(*s)
-		write(1, s++, 1);
+	int	i;
+
+	i = 0;
+	while(s[i])
+		i++;
+	return(i);
+}
+void	ft_putnbr(unsigned int nb)
+{
+	char	c;
+
+	if(nb >= 10)
+		ft_putnbr(nb / 10);
+	c = (nb % 10) + '0';
+	write(1, &c, 1);
 }
 int main()
 {
-	char *str = "hello world !";
-	ft_putstr(str);
+	char *s = "hello world !";
+	ft_putnbr(ft_strlen(s));
+	write(1, "\n", 1);
 }

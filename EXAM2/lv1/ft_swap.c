@@ -6,15 +6,26 @@
 //                                    /____/                     
 //	devjorginho 😎 | GitHub: https://github.com/devjorginho
 
-#include <unistd.h>
+#include <stdio.h>
 
-void	ft_putstr(char *str)
+void	ft_swap(int *a, int *b)
 {
-	while(*s)
-		write(1, s++, 1);
+	int	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
 int main()
 {
-	char *str = "hello world !";
-	ft_putstr(str);
+	int n1 = 42;
+	int n2 = 43;
+
+	printf("Values before the function\n\n");
+	printf("Value of n1: %d\n", n1);
+	printf("Value of n2: %d\n\n", n2);
+	ft_swap(&n1,&n2);
+	printf("Values after the function\n\n");
+	printf("Value of n1: %d\n", n1);
+	printf("Value of n2: %d\n", n2);
 }

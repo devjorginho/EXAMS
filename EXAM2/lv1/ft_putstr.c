@@ -6,49 +6,15 @@
 //                                    /____/                     
 //	devjorginho 😎 | GitHub: https://github.com/devjorginho
 
-
 #include <unistd.h>
-#include <string.h>
 
-int	islletter(char c)
+void	ft_putstr(char *s)
 {
-	return(c >= 'a' && c <= 'z');
-}
-
-int	isuletter(char c)
-{
-	return(c >= 'A' && c <= 'Z');
-}
-char	*plusletter(char *s)
-{
-	char	*start;
-
-	start = s;
 	while(*s)
-	{
-		if(isuletter(*s))
-		{
-			if(*s == 'Z')
-				*s = 'A';
-			else
-				*s = *s + 1;
-		}
-		else if(islletter(*s))
-		{
-			if(*s == 'z')
-				*s = 'a';
-			else
-				*s = *s + 1;
-		}
-		s++;
-	}
-	return(start);
+		write(1, s++, 1);
 }
-
-int main(int argc, char **argv)
+int main()
 {
-	if(argc == 2)
-	{
-		write(1, plusletter(argv[1]), strlen(argv[1]));
-	}
+	char *str = "hello world !";
+	ft_putstr(str);
 }

@@ -8,35 +8,21 @@
 
 #include <unistd.h>
 
-size_t	avlen(char *s)
+char	*ft_strcpy(char *s1, char *s2)
 {
-	size_t i;
+	char *ptr;
 
-	i = 0;
-	while(s[i])
-		i++;
-	return (i);
+	ptr = s1;
+	while(*s2)
+		*s1++ = *s2++; 
+	*s1 = '\0';
+	return(ptr);
 }
-char	*replaced(char *s, char c1, char c2)
+int main()
 {
-	size_t	i;
-
-	i = 0;
-	while(s[i])
-	{
-		if (s[i] == c1)
-			s[i] = c2;
-		i++;
-	}
-	return(s);
-}
-int	main(int argc, char *argv[])
-{
-	size_t i;
-
-	i = 0;
-	if(argc == 4) //&& avlen(argv[2]) == 1 && avlen(argv[3]) == 1 i put this protection if have more than 1 char in av2 and av3
-		write(1, replaced(argv[1], argv[2][i], argv[3][i]), avlen(argv[1]));
-	write(1, "\n", 1);
-	return(0);
+	char s1[4];
+	char *s2 = "egg";
+	char *result = ft_strcpy(s1, s2);
+	while(*result)
+		write(1, result++, 1);
 }

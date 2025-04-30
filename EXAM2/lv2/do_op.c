@@ -4,25 +4,30 @@
 // / /_/ /  __/ |/ /  / /_/ / /_/ / /  / /_/ / / / / / / / / /_/ /
 ///_____/\___/|___/   \____/\____/_/   \__, /_/_/ /_/_/ /_/\____/ 
 //                                    /____/                     
-//	devjorginho 😎 | GitHub: https://github.com/devjorginho
+//      devjorginho 😎 | GitHub: https://github.com/devjorginho
 
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-void	plusmore(char *s)
+int	do_op(int a, char op, int b)
 {
-	while(*s)
-	{
-		if(*s >= 'a' && *s <= 'z')
-			*s = ((*s - 'a' + 13) % 26) + 'a';
-		else if(*s >= 'A' && *s <= 'Z')
-			*s = ((*s - 'A' + 13) % 26) + 'A';
-		write(1, s, 1);
-		s++;
-	}
+	if (op == '-')
+		return (a - b);
+	else if (op == '*')
+		return (a * b);
+	else if (op == '+')
+		return (a + b);
+	else if (op == '/')
+		return (a / b);
+	else if (op == '%')
+		return (a % b);
+	else
+		return (0);
 }
 int main(int ac, char **av)
 {
-	if(ac == 2)
-		plusmore(av[1]);
-	write(1, "\n", 1);
+	if (ac == 4)
+		printf("%d", do_op(atoi(av[1]), av[2][0], atoi(av[3])));
+	printf("\n");
 }

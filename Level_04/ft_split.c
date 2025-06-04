@@ -13,113 +13,88 @@ Your function must be declared as follows:
 
 char    **ft_split(char *str);
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 
-int is_space(char c)
+int	count_words(char *s)
 {
-	if (c == ' ' || (c >= 9 && c <= 13))
-		return (1); 
-	return (0);
-}
-
-int count_words(char *s)
-{
-	int i = 0;
-	int num_words = 0;
-
-	while(s[i])
+	int count = 0;
+	while(*s)
 	{
-		while (s[i] && is_space(s[i]))
-			i++;
-		
-		while (s[i] && !is_space(s[i]))
-		{
-			num_words++;	
-			while (s[i] && !is_space(s[i]))
-				i++;
-		}
+		while(*s && *s == '\t' || *s == ' ')
+			s++;
+		if(*s && *s != '\t' && *s != ' ')
+			count++;
+		while(*s && *s != '\t' && *s != ' ')
+			s++;
 	}
-	return num_words;
-
+	return(count);
 }
-
-int sizes(char **res, char *s)
+void	alloc_matrix(char **lst, char *s)
 {
 	int i = 0;
-	int num_words = 0;
 	int size = 0;
-	while(s[i])
+	while(*s)
 	{
-		while (s[i] && is_space(s[i]))
+		size = 0;
+		while(*s && *s == '\t' || *s == ' ')
+			s++;
+		if(*s && *s != '\t' && *s != ' ')
 			i++;
-		
-		while (s[i] && !is_space(s[i]))
+		while(*s && *s != '\t' && *s != ' ')
 		{
-			num_words++;
 			size++;
-			while (s[i] && !is_space(s[i]))
-			{
-				i++;
-				size++;
-			}
-			res[num_words - 1] = malloc(sizeof(char *) * (size + 1));
-			res[num_words - 1][size] = '\0';
-			size = 0;
+			s++;
+		}
+		if(size > 0)
+		{
+			lst[i - 1] = malloc((size + 1) * sizeof(char));
+			lst[i -1][size] = '\0';
 		}
 	}
-	return num_words;
 }
-
-
-int copies(char **res, char *s)
+void	copy_to_matrix(char **lst, char *s)
 {
 	int i = 0;
-	int num_words = 0;
 	int size = 0;
-	while(s[i])
+	while(*s)
 	{
-		while (s[i] && is_space(s[i]))
+		size = 0;
+		while(*s && *s == '\t' || *s == ' ')
+			s++;
+		if(*s && *s != '\t' && *s != ' ')
 			i++;
-		
-		while (s[i] && !is_space(s[i]))
+		while(*s && *s != '\t' && *s != ' ')
 		{
-			num_words++;
-			while (s[i] && !is_space(s[i]))
-			{
-				res[num_words - 1][size] = s[i];
-				i++;
-				size++;
-			}
-			size = 0;
+			lst[i - 1][size] = *s;
+			size++;
+			s++;
 		}
 	}
-	return num_words;
 }
+
 
 char    **ft_split(char *str)
 {
-	int num_words = count_words(str);
-	char **res = malloc(sizeof(char *) * (num_words + 1));
-	res[num_words] = 0;
-	sizes(res, str);
-	copies(res, str);
-	return(res);
+	char **result;
+	int nb = count_words(str);
+	result = malloc((nb + 1) * sizeof(char *));
+	result[nb] = NULL;
+	alloc_matrix(result, str);
+	copy_to_matrix(result, str);
+	return(result);
 }
-
 int main()
 {
-
-	char **res = ft_split("  Oi Oii Oiiii   ");
-	while(*res)
-	{
-		printf("(%s)\n", *res);
-		res++;
-	}
-	/*
-	printf("%d\n", count_words("     "));
-	printf("%d\n", count_words(" Hello World"));
-	printf("%d\n", count_words("Hello World "));
-	printf("%d\n", count_words("Hello World"));
-*/
+	char s[] = "     Ola jorge tudo bem?   ";
+	char **result = ft_split(s);
+	char **ptr = result;
+	while(*ptr != NULL)
+		printf("%s\n", *ptr++);
+	free(result[0]);
+	free(result[1]);
+	free(result[2]);
+	free(result[3]);
+	free(result);
 }

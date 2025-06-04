@@ -15,6 +15,8 @@ Doubles must be preserved.
 Input is always coherent.
 */
 
+#include <stdio.h>
+
 void	ft_swap(int *a, int *b)
 {
 	int temp;
@@ -26,23 +28,33 @@ void	ft_swap(int *a, int *b)
 void sort_int_tab(int *tab, unsigned int size)
 {
 	int i = 0;
-	while(i <= size - 1)
+	while(i < size)
 	{
-		if(tab[i] > tab[i + 1])
-			ft_swap(&tab[i], &tab[i + 1]);
+		int j = 0;
+		while (j < size - 1)
+		{
+			if(tab[j] > tab[j + 1])
+			{
+				int temp = tab[j + 1];
+				tab[j + 1] = tab[j];
+				tab[j] = temp;
+			}
+			j++;
+		}
+
+		//printf("%d", tab[i], tab[i + 1]);
+			//ft_swap(&tab[i], &tab[i + 1]);
 		i++;
 	}
 }
-#include <stdio.h>
 int main()
 {
 	int i = 0;
-	int size = 5;
-	int nb[] = {-1, 33, 21, 0, 44};
-	sort_int_tab(nb, size);
-	while(i < size)
+	int nb[] = {5,6,4,1,2,3};
+	sort_int_tab(nb, 6);
+	while(i < 6)
 	{
-		printf("%d\n", nb[i]);
+		printf("%d ", nb[i]);
 		i++;
 	}
 }

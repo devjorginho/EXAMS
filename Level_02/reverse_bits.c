@@ -24,22 +24,22 @@ _____________
 
  unsigned char	reverse_bits(unsigned char octet)
  {
-
+	unsigned char bit = 0;
 	int i = 0;
 	while(i < 8)
 	{
 		if(octet >> i & 1)
-			write(1, "1", 1);
+			bit = bit * 10 + 1;
 		else
-			write(1, "0", 1);
+			bit = bit * 10;
 					i++;
 	}
-
-	return octet;
+	return(bit);
  }
  int main()
  {
-	reverse_bits(0b00100110);
+	unsigned char d = reverse_bits(0b00100110);
+	printf("%d", d);
  }
 
 

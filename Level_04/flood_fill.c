@@ -62,9 +62,9 @@ typedef struct  s_point
 
 void fill(char **tab, t_point size, t_point curr, char to_fill)
 {
-	if (curr.x < 0 || curr.x >= size.x || curr.y < 0 || curr.y >= size.x || tab[curr.y][curr.x] != to_fill)
+	if (curr.x < 0 || curr.x >= size.x || curr.y < 0 || curr.y >= size.y || tab[curr.y][curr.x] != to_fill)
 		return
-	tab[curr.y][curr.x] = to_fill;
+	tab[curr.y][curr.x] = 'F';
 	fill(tab, size, (t_point){curr.x + 1, curr.y}, to_fill);
 	fill(tab, size, (t_point){curr.x - 1, curr.y}, to_fill);
 	fill(tab, size, (t_point){curr.x, curr.y + 1}, to_fill);
@@ -73,5 +73,25 @@ void fill(char **tab, t_point size, t_point curr, char to_fill)
 
 flood_fill(char **tab, t_point size, t_point begin)
 {
-	fill(tab, size, begin, tab[curr.y][curr.x]);
+	fill(tab, size, begin, tab[begin.y][begin.x]);
+}
+
+int main(void)
+{
+	char **area;
+	t_point size = {8, 5};
+	t_point begin = {2, 2};
+	char *zone[] = {
+		"1 1 1 1 1 1 1 1",
+		"1 0 0 0 1 0 0 1",
+		"1 0 0 1 0 0 0 1",
+		"1 0 1 1 0 0 0 1",
+		"1 1 1 0 0 0 0 1",
+	}
+	area = make_area(zone);
+	print_tab(area);
+	flood_fill(area, size, begin);
+	putc('\n');
+	print_tab(area);
+	return (0);
 }

@@ -29,8 +29,8 @@ $*/
 
 int	pgcd(int a, int b)
 {
-	int min = a > b ? b : a;
-
+	int min = a > b ? a : b;
+	
 	while(min > 1)
 	{
 		if(a % min == 0 && b % min == 0)

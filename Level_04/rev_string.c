@@ -32,76 +32,56 @@ $>*/
 #include <stdio.h>
 #include <stdlib.h>
 
-int	is_space(char *c)
-{
-	return(*c <= 32);
-}
+#define MAX_Y 1000
+#define MAX_X 1000
 
-int	count_words(char *s)
+void	putstr(char *s)
 {
-	int count = 0;
-
 	while(*s)
-	{
-		while(*s && is_space(s))
-			s++;
-		if(*s && !is_space(s))
-			count++;
-		while(*s && !is_space(s))
-			s++;
-	}
-	return(count);
+		write(1, s++, 1);
 }
-void	alloc_matrix(char **lst, char *s)
+char **ft_split(char *str)
 {
-	int i = -1;
-	int size;
-
-	while(*s)
-	{
-		size = 0;
-		while(*s && is_space(s))
-			s++;
-		if(*s && !is_space(s))
-			i++;
-		while(*s && !is_space(s))
-		{
-			size++;
-			s++;
-		}
-		if(size > 0)
-		{
-			lst[i] = malloc((size + 1) * sizeof(char));
-			lst[i][size] = '\0';
-		}
-	}
-}
-void	copy_to_matrix(char **lst, char *s)
-{
-	int count = 0;
-	int i = 0;
-	while(*s)
-	{
-		while(*s && is_space(s))
-			s++;
-		if(*s && !is_space(s))
-			count++;
-		while(*s && !is_space(s))
-			lst[count - 1][i++] = *s++;
-	}
-}
-char **ft_split(char *s)
-{
-	int nb = count_words(s);
+	int i;
+	int j = 0;
 	char **result;
-	alloc_matrix(result, s);
-	copy_to_matrix(result, s);
-	result[nb] = NULL;
+
+	result = malloc(sizeof(char **) * MAX_X);
+	while(*str == '\t' || *str == '\n' || *str == ' ')
+		str++;
+	while(*str)
+	{
+		if(*str > 32)
+		{
+			i = 0;
+			result[j] = malloc(sizeof(char) * MAX_Y);
+			while(*str > 32)
+				result[j][i++] = *str++;
+			result[j][i] = '\0';
+			j++;
+		}
+		else
+			str++;
+	}
+	result[j] = 0;
 	return(result);
 }
 int main(int ac, char **av)
 {
-	if(ac == 2)
-		ft_split(av[1]);
+	if(ac > 1)
+	{
+		int i = 0;
+		char **result = ft_split(av[1]);
+		while(result[i])
+			i++;
+		i--;
+		while(i > 0)
+		{
+			putstr(result[i]);
+			write(1, " ", 1);
+			i--;
+		}
+		putstr(result[0]);
+	}
 	write(1, "\n", 1);
 }

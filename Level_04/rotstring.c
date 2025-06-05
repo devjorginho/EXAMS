@@ -34,46 +34,57 @@ $
 $>
 */
 
-#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
-int	is_space(char c)
+#define MAX_X 1000
+#define MAX_Y 1000
+
+void	ft_putstr(char *s)
 {
-	return(c <= 32);
+	while(*s)
+		write(1, s++, 1);
 }
-
-void	rostring(char *s)
+char **ft_split(char *s)
 {
-	int i = 0;
+	int i;
 	int j = 0;
-
-	while(s[i] && is_space(s[i]))
-		i++;
-	while(s[i] && !is_space(s[i]))
-		i++;
-	while(s[i] && is_space(s[i]))
-		i++;
-	while(s[i] && !is_space(s[i]))
-		write(1, &s[i++], 1);
-	while(s[i] && is_space(s[i]))
-		i++;	
-	write(1, " ", 1);
-	while(s[i])
+	char **result;
+	
+	result = malloc(sizeof(char **) * MAX_Y);
+	while(*s == '\t' || *s == '\n' || *s == ' ')
+		s++;
+	while(*s)
 	{
-		while(s[i] && !is_space(s[i]))
-			write(1, &s[i++], 1);
-		while(s[i] && is_space(s[i]))
-			i++;	
-		write(1, " ", 1);
+		if(*s > 32)
+		{
+			i = 0;
+			result[j] = malloc(sizeof(char) * MAX_X);
+			while(*s > 32)
+				result[j][i++] = *s++;
+			result[j][i] = '\0';
+			j++;
+		}
+		else
+			s++;
 	}
-	while(s[j] && is_space(s[j]))
-		j++;
-	while(s[j] && !is_space(s[j]))
-		write(1, &s[j++], 1);
+	result[j] = 0;
+	return(result);
 }
 int main(int ac, char **av)
 {
-	if(ac == 2)
-		rostring(av[1]);
+	if(ac > 1)
+	{
+		int i = 1;
+		char **result = ft_split(av[1]);
+		while(result[i])
+		{
+			ft_putstr(result[i]);
+			write(1, " ", 1);
+			i++;
+		}
+		ft_putstr(result[0]);
+	}
 	write(1, "\n", 1);
 }

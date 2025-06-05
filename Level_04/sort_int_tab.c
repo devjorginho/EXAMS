@@ -41,9 +41,6 @@ void sort_int_tab(int *tab, unsigned int size)
 			}
 			j++;
 		}
-
-		//printf("%d", tab[i], tab[i + 1]);
-			//ft_swap(&tab[i], &tab[i + 1]);
 		i++;
 	}
 }

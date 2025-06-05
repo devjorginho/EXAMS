@@ -14,87 +14,41 @@ Your function must be declared as follows:
 char    **ft_split(char *str);
 */
 
-#include <stdio.h>
 #include <stdlib.h>
-
-int	count_words(char *s)
-{
-	int count = 0;
-	while(*s)
-	{
-		while(*s && *s == '\t' || *s == ' ')
-			s++;
-		if(*s && *s != '\t' && *s != ' ')
-			count++;
-		while(*s && *s != '\t' && *s != ' ')
-			s++;
-	}
-	return(count);
-}
-void	alloc_matrix(char **lst, char *s)
-{
-	int i = 0;
-	int size = 0;
-	while(*s)
-	{
-		size = 0;
-		while(*s && *s == '\t' || *s == ' ')
-			s++;
-		if(*s && *s != '\t' && *s != ' ')
-			i++;
-		while(*s && *s != '\t' && *s != ' ')
-		{
-			size++;
-			s++;
-		}
-		if(size > 0)
-		{
-			lst[i - 1] = malloc((size + 1) * sizeof(char));
-			lst[i -1][size] = '\0';
-		}
-	}
-}
-void	copy_to_matrix(char **lst, char *s)
-{
-	int i = 0;
-	int size = 0;
-	while(*s)
-	{
-		size = 0;
-		while(*s && *s == '\t' || *s == ' ')
-			s++;
-		if(*s && *s != '\t' && *s != ' ')
-			i++;
-		while(*s && *s != '\t' && *s != ' ')
-		{
-			lst[i - 1][size] = *s;
-			size++;
-			s++;
-		}
-	}
-}
-
+#define MAX_Y 1000
+#define MAX_X 1000
 
 char    **ft_split(char *str)
 {
+	int i;
+	int j = 0;
 	char **result;
-	int nb = count_words(str);
-	result = malloc((nb + 1) * sizeof(char *));
-	result[nb] = NULL;
-	alloc_matrix(result, str);
-	copy_to_matrix(result, str);
+
+	result = malloc(sizeof(char **) * MAX_Y);
+	while(*str == '\t' || *str == '\n' || *str == ' ')
+		str++;
+	while(*str)
+	{
+		if(*str > 32)
+		{
+			i = 0;
+			result[j] = malloc(sizeof(char) * MAX_X);
+			while(*str > 32)
+				result[j][i++] = *str++;
+			result[j][i] = '\0';
+			j++;
+		}
+		else
+			str++;
+	}
+	result[j] = 0;
 	return(result);
 }
+#include <stdio.h>
 int main()
 {
-	char s[] = "     Ola jorge tudo bem?   ";
+	char s[] = "		Hello world jorginho       teste   	      ";
 	char **result = ft_split(s);
-	char **ptr = result;
-	while(*ptr != NULL)
-		printf("%s\n", *ptr++);
-	free(result[0]);
-	free(result[1]);
-	free(result[2]);
-	free(result[3]);
-	free(result);
+	while(*result)
+		printf("%s\n", *result++);
 }

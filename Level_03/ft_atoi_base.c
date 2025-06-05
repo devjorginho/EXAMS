@@ -21,43 +21,33 @@ int	ft_atoi_base(const char *str, int str_base);*/
 
 #include <stdio.h>
 
-int get_digit(char c)
+int	ft_atoi_base(const char *s, int str_base)
 {
-	if(c >= '0' && c <= '9')
-		return(c - '0');
-	else if(c >= 'A' && c <= 'F')
-		return(c - 55 + 10);
-	else if(c >= 'a' && c <= 'f')
-		return(c - 87 + 10);
-	return(-1);
-}
-int	ft_atoi_base(const char *str, int str_base)
-{
-	int digit;
-	int result;
-	int sign;
+	int sign = 1;
+	int result = 0;
+	(void) str_base;
 
-	sign = 1;
-	while(*str == ' ' || *str == '\t')
-		str++;
-	if(*str == '+' || *str == '-')
+	if(*s == '-' || *s == '+')
 	{
-		if(*str == '-')
+		if(*s == '-')
 			sign = -sign;
-		str++;
+		s++;
 	}
-	while(*str && *str > 32)
+	while((*s >= '0' && *s <= '9') || (*s >= 'a' && *s <= 'f') || (*s >= 'A' && *s <= 'F'))
 	{
-		if(get_digit(*str))
-		{
-			result = result * str_base;
-			result = get_digit(*str);
-		}
-		str++;
+		result = result * str_base;
+		if (*s >= '0' && *s <= '9')
+			result = result + *s - '0';
+		else if (*s >= 'a' && *s <= 'f')
+			result = result + *s - 'a' + 10;
+		else if (*s >= 'A' && *s <= 'F')
+			result = result + *s - 'A' + 10;
+		s++;
 	}
 	return(result * sign);
 }
+
 int main()
 {
-	printf("%d", ft_atoi_base("ff", 16));
+	printf("%d", ft_atoi_base("FFFFFFF", 10));
 }

@@ -32,12 +32,12 @@ $
 $> ./fprime 42 21 | cat -e
 $*/
 
+
+#include <stdio.h>
+
 void	fprime(int n)
 {
-	int i;
-	int divisor = 2;
-	int first = 1;
-
+	int i = 2;
 	if(n == 1)
 	{
 		printf("1");
@@ -45,16 +45,21 @@ void	fprime(int n)
 	}
 	while(n > 1)
 	{
-		if(n % divisor == 0)
+		if(n % i == 0)
 		{
-			if(!first)
-				printf("*");
-			printf("%d", divisor);
-			n = n / divisor;
-			first = 0;
+			printf("%d", i);
+			n = n / i;
+			if(n == 1)
+				break;
+			printf("*");
 		}
 		else
-			divisor++;
+			i++;
 	}
-} // falta terminar
+}
+
+int main()
+{
+	fprime(1);
+}
 
